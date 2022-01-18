@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,400i&display=swap');
+@import "./colors.scss";
+
+//------- Component Assignments -------
+// Node
+$nodeBorderColor: $lightGrey;
+$nodeBackground: rgba($white, 0.9);
+$nodeTextColor: $grey;
+$nodeSelectedBorderColor: $blue;
+$nodeSelectedBackground: $white;
+$nodeShadowColor: rgba($darkGrey, 0.15);
+
+//Socket
+$socketBorderColor: $nodeBorderColor;
+$socketBackground: $nodeBackground;
+
+//Controls
+$controlBorderColor: $nodeBorderColor;
+$controlBacground: $nodeBackground;
+$controlFocusedBorderColor: $nodeSelectedBorderColor;
+
+//Connection line
+$connectionColor: rgba($nodeSelectedBorderColor, .75);
+
+//Context menu
+$contextMenuBackground: $nodeBackground;
+$contextMenuForeground: $nodeTextColor;
+$contextMenuBorderColor: $nodeBorderColor;
+$contextMenuShadowColor: $nodeShadowColor;
+
+
+#rete {
+  height: 100%;
+  min-height: 100vh;
+  width: calc(100% - 350px) !important;
+  position: relative;
+
+}
+
+.connection .main-path {
+  stroke: $connectionColor;
+}
+
+.context-menu {
+  box-shadow: 0px 4px 30px $contextMenuShadowColor;
+  padding: 0 !important;
+  font-family: sans-serif;
+  z-index: 1;
+  .search, .item, .search input {
+    background-color: $contextMenuBackground !important;
+    border-width: 2px;
+    color: $contextMenuForeground !important;
+    border-color: $contextMenuBorderColor !important;
+  }
+  .search, .item {
+    padding: 8px 10px !important;
+    box-sizing: border-box;
+  }
+  .search input {
+    padding: 2px 8px;
+  }
+}
+
+.socket.dialog {
+  &.input,
+  &.output {
+    background: $socketBackground;
+    border-color: $socketBorderColor;
+    border-radius: 3px;
+    width: 15px;
+    &::after {
+      content: "➤";
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 10px;
+      color: $socketBorderColor;
+    }
+    &:hover {
+      border-width: 1px;
+      opacity: 0.7;
+    }
+  }
+
+  &.input {
+    margin-left: -8px !important;
+    position: absolute;
+    top: 50%;
+  }
+
+  &.output {
+    margin-right: -8px !important;
+  }
+
+  
+}
+
+.node.incoming-call,
+.node.end-call,
+.node.switch {
+
+  background-color: $nodeBackground !important;
+  box-shadow: 0px 4px 30px $nodeShadowColor;
+  border: 2px solid $nodeBorderColor !important;
+  color: $nodeTextColor !important;
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+
+  &.selected {
+    border: 2px solid $nodeSelectedBorderColor !important;
+  }
+
+  .title {
+    color: inherit !important;
+    order: 0;
+  }
+
+  .input {
+    order: 0;
+  }
+  .control {
+    order: 1
+  }
+  .output {
+    order: 2;
+  }
+  
+  .input .input-title,
+  .output .output-title {
+    color: inherit;
+  }
+
+  .inputLabel {
+    color: inherit !important;
+    font-style: italic;
+  }
+
+  .control,
+  .input-control {
+    min-width: calc(100% - 36px);
+    width: auto !important;
+    input,
+    textarea {
+      font-family: inherit;
+      font-size: 16px;
+      border: none;
+      border-bottom: 2px solid $controlBorderColor;
+
+      display: block;
+      margin-top: 5px;
+      padding-left: 0;
+      padding-right: 0;
+      width: 100%;
+
+      margin-bottom: 0.5em;
+
+      &:focus {
+        border-bottom-color: $controlFocusedBorderColor;
+        outline: none;
+      }
+    }
+  }
+}
+

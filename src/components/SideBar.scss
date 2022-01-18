@@ -1,0 +1,232 @@
+@import "./colors.scss";
+
+//------- Component Assignments -------
+
+//SideBar
+$sideBarBackground: $white;
+$sideBarForeground: $grey;
+$sideBarBorderColor: $lightGrey;
+$sideBarShadowColor: rgba($darkGrey, 0.15);
+$sideBarWidth: 350px;
+
+//Save button
+$saveButtonBackground: $blue;
+$saveButtonForeground: $white;
+
+
+//Console
+$consoleBackground: $sideBarBackground;
+$consoleForeground: $sideBarForeground;
+$consoleBorderColor: $lightGrey;
+$consoleShadowColor: rgba($darkGrey, 0.15);
+$consoleFocusBordeColor: $blue;
+
+//Chat
+$chatIncommingMessageForeground: $grey;
+$chatIncommingMessageBackground: transparent;
+$chatIncommingMessageBorderColor: $lightGrey;
+
+$chatOutgoingMessageForeground: $white;
+$chatOutgoingMessageBackground: $blue;
+$chatOutgoingMessageBorderColor: transparent;
+
+.side-bar {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  display: none;
+
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: $sideBarWidth;
+
+  padding: 10px;
+
+  background: $sideBarBackground;
+  color: $sideBarForeground;
+
+  box-shadow: 0px 4px 30px $sideBarShadowColor;
+
+  font-family: 'Open Sans', sans-serif;
+
+  &__actions {
+    position: relative;
+    display: flex;
+    justify-content: stretch;
+    margin-bottom: 10px;
+  }
+  &__console {
+    height: 30%;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid $consoleBorderColor;
+    border-radius: 5px;
+    margin-bottom: 10px;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      box-shadow: 0 0 10px 10px $consoleBackground;
+      z-index: 1;
+    }
+  }
+  &__chat {
+    height: 100%;
+    margin-top: auto;
+    display: flex;
+    justify-content: flex-end;
+    overflow: hidden;
+    position: relative;
+    flex-direction: column;
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      box-shadow: 0 0 10px 10px $sideBarBackground;
+      z-index: 1;
+    }
+  }
+}
+
+button.save-button {
+  border: none;
+  border-radius: -12px;
+  background: $saveButtonBackground;
+  color: $saveButtonForeground;
+  padding: 0.4em 0.5em;
+  font-size: 16px;
+  cursor: pointer;
+  flex-grow: 1;
+
+  &[disabled] {
+    opacity: 0.8;
+  }
+}
+.chat-input {
+  font-size: 16px;
+  color: $consoleForeground;
+  border: none;
+  border: 2px solid $consoleBorderColor;
+  width: 100%;
+  min-height: 5em;
+  border-radius: 10px;
+  padding: 8px 10px;
+  box-sizing: border-box;
+
+  font-family: inherit;
+
+  transition: border-color 250ms;
+
+  &:focus {
+    outline: none;
+    border-color: transparent;
+    border-bottom-color: $consoleFocusBordeColor
+  }
+}
+@keyframes appearFrames {
+  from {
+    left: 100%;
+  }
+
+  to {
+    left: 0;
+  }
+}
+@keyframes appearFramesLeft {
+  from {
+    right: 100%;
+  }
+
+  to {
+    right: 0;
+  }
+}
+.chat-log {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+  overflow: hidden;
+
+
+  &__entry {
+    width: 100%;
+    position: relative;
+    animation: 250ms appearFrames;
+    box-sizing: border-box;
+    width: max-content;
+    max-width: 80%;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: 1px solid;
+
+    &--outgoing {
+      text-align: right;
+      align-self: flex-end;
+      background: $chatOutgoingMessageBackground;
+      color: $chatOutgoingMessageForeground;
+      border-color: $chatOutgoingMessageBorderColor;
+    }
+    &--incomming {
+      animation-name: appearFramesLeft;
+      background: $chatIncommingMessageBackground;
+      color: $chatIncommingMessageForeground;
+      border-color: transparent;
+      border-right-color: $chatIncommingMessageBorderColor;
+      border-bottom-color: $chatIncommingMessageBorderColor;
+      
+    }
+    &--system {
+      margin-left: auto;
+      margin-right: auto;
+      font-style: italic;
+      border: none;
+      font-size: 0.8em;
+      animation-delay: 1s;
+    }
+  }
+}
+.console-log {
+  width: 100%;
+
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  font-family: monospace;
+
+  &__entry {
+    width: 100%;
+    position: relative;
+    animation: 250ms appearFrames;
+
+    padding: 5px;
+    word-break: break-all;
+
+    box-sizing: border-box;
+    margin-left: 1ch;
+    &::before {
+      content: '>';
+      position: absolute;
+      left: -5px;
+    }
+  }
+
+  &__entry-word {
+    display: inline-block;
+    margin-right: 1ch;
+  }
+}
